@@ -46,6 +46,9 @@ public:
   ~Elfin_Robot();
 
   void state_update();
+
+  bool enable_robot();
+  bool disable_robot();
 };
 
 Elfin_Robot::Elfin_Robot(elfin_ethercat_driver_v2::EtherCatManager *manager,
@@ -129,28 +132,74 @@ void Elfin_Robot::state_update()
             << std::endl;
 }
 
+  bool Elfin_Robot::enable_robot()
+  {
+    std_srvs::SetBool::Request req;
+    req.data = true;
+
+    std_srvs::SetBool::Response resp;
+
+    p_ethercat_drivers_->enableRobot_cb(req, resp);
+  }
+
+  bool Elfin_Robot::disable_robot()
+  {
+    std_srvs::SetBool::Request req;
+    req.data = true;
+
+    std_srvs::SetBool::Response resp;
+
+    p_ethercat_drivers_->disableRobot_cb(req, resp);
+  }
+
 }   // end of namespace dr
 
 #ifdef TEST_DR_ELFINROBOT
 
 int main(int argc, char** argv)
 {
-    ros::init(argc,argv,"elfin_ethercat_driver_v2_node", ros::init_options::AnonymousName);
-    ros::NodeHandle nh("elfin_ethercat_driver_v2_node");
+  ros::init(argc,argv,"elfin_ethercat_driver_v2_node", ros::init_options::AnonymousName);
+  ros::NodeHandle nh("elfin_ethercat_driver_v2_node");
 
-    // init the ethercat manager
-    std::string ethernet_name;
-    ethernet_name = nh.param<std::string>("elfin_ethernet_name", "eth0");
-    elfin_ethercat_driver_v2::EtherCatManager em(ethernet_name);
-    
-    dr::Elfin_Robot robot(&em, nh);
+  // init the ethercat manager
+  std::string ethernet_name;
+  ethernet_name = nh.param<std::string>("elfin_ethernet_name", "eth0");
+  elfin_ethercat_driver_v2::EtherCatManager em(ethernet_name);
+  
+  dr::Elfin_Robot robot(&em, nh);
 
-    while(1)
-    {
-      robot.state_update();
-      usleep(1000000);
-    }
 
+  size_t counter = 0;
+
+  for ( ; counter < 5; counter++)
+  {
+    robot.state_update();
+    usleep(1000000);    
+  }
+  
+  robot.enable_robot();
+
+  for ( ; counter < 20; counter++)
+  {
+    robot.state_update();
+    usleep(1000000);     
+  }
+
+  robot.disable_robot();
+
+  for ( ; counter < 25; counter++)
+  {
+    robot.state_update();
+    usleep(1000000);     
+  }
+
+  // while(1)
+  // {
+  //   robot.state_update();
+  //   usleep(1000000);
+  // }
+
+  return 0;
 }
 
 #else
