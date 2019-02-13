@@ -807,17 +807,17 @@ int32_t ElfinEtherCATDriver::getIntFromStr(std::string str)
 
 } // end namespace
 
-int main(int argc, char** argv)
-{
-    ros::init(argc,argv,"elfin_ethercat_driver_v2", ros::init_options::AnonymousName);
+// int main(int argc, char** argv)
+// {
+//     ros::init(argc,argv,"elfin_ethercat_driver_v2", ros::init_options::AnonymousName);
     
-    ros::NodeHandle nh("elfin_ethercat_driver_v2");
+//     ros::NodeHandle nh("elfin_ethercat_driver_v2");
 
-    std::string ethernet_name;
-    ethernet_name=nh.param<std::string>("elfin_ethernet_name", "eth0");
+//     std::string ethernet_name;
+//     ethernet_name=nh.param<std::string>("elfin_ethernet_name", "eth0");
     
-    elfin_ethercat_driver_v2::EtherCatManager em("eno1");
-    elfin_ethercat_driver_v2::ElfinEtherCATDriver ed(&em, "elfin");
+//     elfin_ethercat_driver_v2::EtherCatManager em("eno1");
+//     elfin_ethercat_driver_v2::ElfinEtherCATDriver ed(&em, "elfin");
 
-    ros::spin();
-}
+//     ros::spin();
+// }
