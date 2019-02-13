@@ -1,0 +1,7 @@
+<launch>    
+ 
+  <node name="elfin_ethercat_driver_v2_node" pkg="elfin_ethercat_driver_v2" type="elfin_ethercat_driver_v2_node" output="screen">
+    <rosparam file="$(find elfin_robot_bringup)/config/elfin_drivers.yaml" command="load"/>
+  </node>
+   
+</launch>

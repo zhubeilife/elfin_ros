@@ -146,16 +146,24 @@ add_library(elfin_ethercat_driver_v2
 
 
 # Add cmake target dependencies of the library
-# as an example, code may need to be generated before libraries
+# as an example, code may need to be generated before librariess
 # either from message generation or dynamic reconfigure
 add_dependencies(elfin_ethercat_driver_v2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 # Declare a C++ executable
-# add_executable(elfin_ethercat_driver_v2_node src/elfin_ethercat_driver_v2_node.cpp)
+add_executable(elfin_ethercat_driver_v2_node 
+  src/elfin_ethercat_driver_v2.cpp
+  src/elfin_ethercat_client_v2.cpp
+  src/elfin_ethercat_io_client_v2.cpp
+  src/elfin_ethercat_manager_v2.cpp)
 
 # Add cmake target dependencies of the executable
 # same as for the library above
-# add_dependencies(elfin_ethercat_driver_v2_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(elfin_ethercat_driver_v2_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+target_link_libraries(elfin_ethercat_driver_v2_node
+  ${catkin_LIBRARIES}
+)
 
 # Specify libraries to link a library or executable target against
 target_link_libraries(elfin_ethercat_driver_v2
