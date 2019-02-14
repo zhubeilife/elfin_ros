@@ -164,25 +164,18 @@ void Elfin_Robot::state_update()
 
     for (int i = 0; i < module_infos_.size(); i++)
     {
-      module_no.push_back(i)
-    }
-
-    for(int j=0; j<module_no.size(); j++)
-    {
-        boost::mutex::scoped_lock pre_switch_flags_lock(*pre_switch_mutex_ptrs_[module_no[j]]);
-        pre_switch_flags_[module_no[j]]=true;
-        pre_switch_flags_lock.unlock();
+      module_no.push_back(i);
     }
 
     usleep(5000);
 
     for(int j=0; j<module_no.size(); j++)
     {
-        module_infos_[module_no[j]].client_ptr->setAxis1VelFFCnt(0x0);
-        module_infos_[module_no[j]].client_ptr->setAxis2VelFFCnt(0x0);
+      module_infos_[module_no[j]].client_ptr->setAxis1VelFFCnt(0x0);
+      module_infos_[module_no[j]].client_ptr->setAxis2VelFFCnt(0x0);
 
-        module_infos_[module_no[j]].client_ptr->setAxis1TrqCnt(0x0);
-        module_infos_[module_no[j]].client_ptr->setAxis2TrqCnt(0x0);
+      module_infos_[module_no[j]].client_ptr->setAxis1TrqCnt(0x0);
+      module_infos_[module_no[j]].client_ptr->setAxis2TrqCnt(0x0);
     }
 
     for(int j=0; j<module_no.size(); j++)
@@ -196,16 +189,9 @@ void Elfin_Robot::state_update()
     {
         if(!module_infos_[module_no[j]].client_ptr->inPosMode())
         {
-            ROS_ERROR("module[%i]: set position mode failed", module_no[j]);
+          ROS_ERROR("module[%i]: set position mode failed", module_no[j]);
 
-            for(int k=0; k<module_no.size(); k++)
-            {
-                boost::mutex::scoped_lock pre_switch_flags_lock(*pre_switch_mutex_ptrs_[module_no[k]]);
-                pre_switch_flags_[module_no[k]]=false;
-                pre_switch_flags_lock.unlock();
-            }
-
-            return false;
+          return false;
         }
     }
     return true;
@@ -221,6 +207,8 @@ void Elfin_Robot::state_update()
 
       module_infos_[i].client_ptr->setAxis1PosCnt(int32_t(position_cmd_count1));
       module_infos_[i].client_ptr->setAxis2PosCnt(int32_t(position_cmd_count2));
+
+      // for test position cmd purpose so remove send velocity and effort command
 
       // double vel_ff_cmd_count1=-1 * module_infos_[i].axis1.vel_ff_cmd * module_infos_[i].axis1.count_rad_per_s_factor / 16.0;
       // double vel_ff_cmd_count2=-1 * module_infos_[i].axis2.vel_ff_cmd * module_infos_[i].axis2.count_rad_per_s_factor / 16.0;
@@ -239,10 +227,10 @@ void Elfin_Robot::state_update()
   void Elfin_Robot::test_six_axis_move()
   {
     // set to zero axis
-    module_infos_[2].axis2.position_cmd = 0;
+    //module_infos_[2].axis2.position_cmd = 0;
 
-    // set to increase 0.1 rad about 5.7 degree
-    module_infos_[2].axis2.position_cmd = module_infos_[2].axis2.position + 0.1;
+    // set to decrease 0.005 rad
+    module_infos_[2].axis2.position_cmd = module_infos_[2].axis2.position - 0.005;
   }
 
 }   // end of namespace dr
@@ -261,23 +249,29 @@ int main(int argc, char** argv)
 
   dr::Elfin_Robot robot(&em, nh);
 
-
+  std::cout << "--------------------------------------\n";
+  std::cout << "Publish Robot status\n";
+  std::cout << "--------------------------------------\n";
   size_t counter = 0;
-
   for (counter = 0; counter < 5; counter++)
   {
     robot.state_update();
     usleep(1000000);
   }
 
+  std::cout << "--------------------------------------\n";
+  std::cout << "Enable Robot\n";
+  std::cout << "--------------------------------------\n";
   robot.enable_robot();
-
   for (counter = 0 ; counter < 10; counter++)
   {
     robot.state_update();
     usleep(1000000);
   }
 
+  std::cout << "--------------------------------------\n";
+  std::cout << "Set Robot Arm to postion Mode\n";
+  std::cout << "--------------------------------------\n";
   if (robot.setGroupPosMode() != true)
   {
     std::cout << "Set robot arm to postion mode is ERROR!\n";
@@ -288,10 +282,23 @@ int main(int argc, char** argv)
     usleep(1000000);
   }
 
+  std::cout << "--------------------------------------\n";
+  std::cout << "Move Robot Six Axis\n";
+  std::cout << "--------------------------------------\n";
+  //robot.test_six_axis_move();
+  //robot.write_update();
+  for (counter = 0 ; counter < 5; counter++)
+  {
+    robot.state_update();
+    robot.test_six_axis_move();
+    robot.write_update();
+    usleep(50000);
+  }
 
-
+  std::cout << "--------------------------------------\n";
+  std::cout << "Disable robot Arm\n";
+  std::cout << "--------------------------------------\n";
   robot.disable_robot();
-
   for (counter = 0 ; counter < 10; counter++)
   {
     robot.state_update();
