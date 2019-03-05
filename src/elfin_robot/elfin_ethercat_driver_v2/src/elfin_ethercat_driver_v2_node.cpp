@@ -229,8 +229,8 @@ void Elfin_Robot::state_update()
     // set to zero axis
     //module_infos_[2].axis2.position_cmd = 0;
 
-    // set to decrease 0.005 rad
-    module_infos_[2].axis2.position_cmd = module_infos_[2].axis2.position - 0.005;
+    // set to decrease 0.005 rad ~ 0.003
+    module_infos_[2].axis2.position_cmd = module_infos_[2].axis2.position - 0.0005;
   }
 
 }   // end of namespace dr
@@ -287,12 +287,12 @@ int main(int argc, char** argv)
   std::cout << "--------------------------------------\n";
   //robot.test_six_axis_move();
   //robot.write_update();
-  for (counter = 0 ; counter < 5; counter++)
+  for (counter = 0 ; counter < 50; counter++)
   {
     robot.state_update();
     robot.test_six_axis_move();
     robot.write_update();
-    usleep(50000);
+    usleep(5000);
   }
 
   std::cout << "--------------------------------------\n";
