@@ -135,6 +135,14 @@ void Elfin_Robot::state_update()
             <<"velocity " << module_infos_[2].axis2.velocity << " "
             <<"effort " << module_infos_[2].axis2.effort << " "
             << std::endl;
+  std::cout << "--" <<  module_infos_[0].axis1.position
+            << "--" <<  module_infos_[0].axis2.position
+            << "--" <<  module_infos_[1].axis1.position
+            << "--" <<  module_infos_[1].axis2.position
+            << "--" <<  module_infos_[2].axis1.position
+            << "--" <<  module_infos_[2].axis2.position
+            << std::endl;
+  std::cout << "count_rad_factor  " << module_infos_[2].axis2.axis_position_factor << std::endl;
 }
 
   bool Elfin_Robot::enable_robot()
@@ -203,10 +211,30 @@ void Elfin_Robot::state_update()
     {
       // update position cmd
       double position_cmd_count1=-1 * module_infos_[i].axis1.position_cmd * module_infos_[i].axis1.count_rad_factor + module_infos_[i].axis1.count_zero;
+
       double position_cmd_count2=-1 * module_infos_[i].axis2.position_cmd * module_infos_[i].axis2.count_rad_factor + module_infos_[i].axis2.count_zero;
 
       module_infos_[i].client_ptr->setAxis1PosCnt(int32_t(position_cmd_count1));
-      module_infos_[i].client_ptr->setAxis2PosCnt(int32_t(position_cmd_count2));
+
+      if (i == 2)
+      {
+        double position_cmd_count2=-1 * module_infos_[2].axis2.position_cmd * module_infos_[2].axis2.axis_position_factor + module_infos_[2].axis2.count_zero;
+        //module_infos_[2].client_ptr->setAxis2PosCnt(int32_t(position_cmd_count2));
+        module_infos_[2].client_ptr->setAxis2PosCnt(int32_t(module_infos_[2].axis2.count_zero - 100));
+      }
+      else
+      {
+        module_infos_[i].client_ptr->setAxis2PosCnt(int32_t(position_cmd_count2));
+      }
+      
+      if (i == 2)
+      {
+        std::cout << "\n cmd counter: " 
+                  << position_cmd_count1 - module_infos_[2].axis1.count_zero
+                  << "  --  " 
+                  << position_cmd_count2 - module_infos_[2].axis2.count_zero
+                  << "\n";
+      }
 
       // for test position cmd purpose so remove send velocity and effort command
 
@@ -229,8 +257,8 @@ void Elfin_Robot::state_update()
     // set to zero axis
     //module_infos_[2].axis2.position_cmd = 0;
 
-    // set to decrease 0.005 rad ~ 0.003
-    module_infos_[2].axis2.position_cmd = module_infos_[2].axis2.position - 0.0005;
+    // set to decrease 0.0005 rad ~ 0.003
+    module_infos_[2].axis2.position_cmd = module_infos_[2].axis2.position - 0.0003;
   }
 
 }   // end of namespace dr
@@ -253,20 +281,20 @@ int main(int argc, char** argv)
   std::cout << "Publish Robot status\n";
   std::cout << "--------------------------------------\n";
   size_t counter = 0;
-  for (counter = 0; counter < 5; counter++)
+  for (counter = 0; counter < 2; counter++)
   {
     robot.state_update();
-    usleep(1000000);
+    usleep(100000);
   }
 
   std::cout << "--------------------------------------\n";
   std::cout << "Enable Robot\n";
   std::cout << "--------------------------------------\n";
   robot.enable_robot();
-  for (counter = 0 ; counter < 10; counter++)
+  for (counter = 0 ; counter < 2; counter++)
   {
     robot.state_update();
-    usleep(1000000);
+    usleep(100000);
   }
 
   std::cout << "--------------------------------------\n";
@@ -276,17 +304,15 @@ int main(int argc, char** argv)
   {
     std::cout << "Set robot arm to postion mode is ERROR!\n";
   }
-  for (counter = 0 ; counter < 10; counter++)
+  for (counter = 0 ; counter < 2; counter++)
   {
     robot.state_update();
     usleep(1000000);
   }
 
-  std::cout << "--------------------------------------\n";
-  std::cout << "Move Robot Six Axis\n";
-  std::cout << "--------------------------------------\n";
-  //robot.test_six_axis_move();
-  //robot.write_update();
+  // std::cout << "--------------------------------------\n";
+  // std::cout << "Move Robot Six Axis\n";
+  // std::cout << "--------------------------------------\n";
   for (counter = 0 ; counter < 50; counter++)
   {
     robot.state_update();
@@ -295,11 +321,17 @@ int main(int argc, char** argv)
     usleep(5000);
   }
 
+  for (counter = 0 ; counter < 2; counter++)
+  {
+    robot.state_update();
+    usleep(1000000);
+  }
+
   std::cout << "--------------------------------------\n";
   std::cout << "Disable robot Arm\n";
   std::cout << "--------------------------------------\n";
   robot.disable_robot();
-  for (counter = 0 ; counter < 10; counter++)
+  for (counter = 0 ; counter < 5; counter++)
   {
     robot.state_update();
     usleep(1000000);
