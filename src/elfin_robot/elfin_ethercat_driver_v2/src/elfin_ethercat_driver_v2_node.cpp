@@ -48,7 +48,7 @@ public:
   void state_update();
   void write_update();
 
-  void test_six_axis_move();
+  void test_six_axis_move(double cmd = 0.00005);
 
   bool enable_robot();
   bool disable_robot();
@@ -142,7 +142,6 @@ void Elfin_Robot::state_update()
             << "--" <<  module_infos_[2].axis1.position
             << "--" <<  module_infos_[2].axis2.position
             << std::endl;
-  std::cout << "count_rad_factor  " << module_infos_[2].axis2.axis_position_factor << std::endl;
 }
 
   bool Elfin_Robot::enable_robot()
@@ -211,8 +210,10 @@ void Elfin_Robot::state_update()
     {
       if(!module_infos_[i].client_ptr->inPosBasedMode())
       {
-          module_infos_[i].axis1.position_cmd=module_infos_[i].axis1.position;
-          module_infos_[i].axis2.position_cmd=module_infos_[i].axis2.position;
+        // module_infos_[i].axis1.position_cmd=module_infos_[i].axis1.position;
+        // module_infos_[i].axis2.position_cmd=module_infos_[i].axis2.position;
+
+        std::cout << "Caution! Not in posbasemode!\n";
       }
 
       // update position cmd
@@ -223,37 +224,55 @@ void Elfin_Robot::state_update()
       module_infos_[i].client_ptr->setAxis1PosCnt(int32_t(position_cmd_count1));
       module_infos_[i].client_ptr->setAxis2PosCnt(int32_t(position_cmd_count2));
 
-      if (i == 2)
+      if (i == 0)
       {
         std::cout << "\n cmd counter: "
-                  << position_cmd_count1 - module_infos_[2].axis1.count_zero
+                  << int32_t(position_cmd_count1) - module_infos_[i].axis1.count_zero
                   << "  --  "
-                  << position_cmd_count2 - module_infos_[2].axis2.count_zero
+                  << int32_t(position_cmd_count2) - module_infos_[i].axis2.count_zero
+                  << "  --  ";
+      }
+      else if (i == 1)
+      {
+        std::cout << int32_t(position_cmd_count1) - module_infos_[i].axis1.count_zero
+                  << "  --  "
+                  << int32_t(position_cmd_count2) - module_infos_[i].axis2.count_zero
+                  << "  --  ";
+      }
+      else if (i == 2)
+      {
+        std::cout << int32_t(position_cmd_count1) - module_infos_[i].axis1.count_zero
+                  << "  --  "
+                  << int32_t(position_cmd_count2) - module_infos_[i].axis2.count_zero
+                  << "\n";
+        std::cout << "position cmd:  "
+                  << module_infos_[i].axis1.position_cmd
+                  << module_infos_[i].axis1.position_cmd
                   << "\n";
       }
 
       // for test position cmd purpose so remove send velocity and effort command
 
-      // double vel_ff_cmd_count1=-1 * module_infos_[i].axis1.vel_ff_cmd * module_infos_[i].axis1.count_rad_per_s_factor / 16.0;
-      // double vel_ff_cmd_count2=-1 * module_infos_[i].axis2.vel_ff_cmd * module_infos_[i].axis2.count_rad_per_s_factor / 16.0;
+      double vel_ff_cmd_count1=-1 * module_infos_[i].axis1.vel_ff_cmd * module_infos_[i].axis1.count_rad_per_s_factor / 16.0;
+      double vel_ff_cmd_count2=-1 * module_infos_[i].axis2.vel_ff_cmd * module_infos_[i].axis2.count_rad_per_s_factor / 16.0;
 
-      // module_infos_[i].client_ptr->setAxis1VelFFCnt(int16_t(vel_ff_cmd_count1));
-      // module_infos_[i].client_ptr->setAxis2VelFFCnt(int16_t(vel_ff_cmd_count2));
+      module_infos_[i].client_ptr->setAxis1VelFFCnt(int16_t(vel_ff_cmd_count1));
+      module_infos_[i].client_ptr->setAxis2VelFFCnt(int16_t(vel_ff_cmd_count2));
 
-      // double torque_cmd_count1=-1 * module_infos_[i].axis1.effort_cmd * module_infos_[i].axis1.count_Nm_factor;
-      // double torque_cmd_count2=-1 * module_infos_[i].axis2.effort_cmd * module_infos_[i].axis2.count_Nm_factor;
+      double torque_cmd_count1=-1 * module_infos_[i].axis1.effort_cmd * module_infos_[i].axis1.count_Nm_factor;
+      double torque_cmd_count2=-1 * module_infos_[i].axis2.effort_cmd * module_infos_[i].axis2.count_Nm_factor;
 
-      // module_infos_[i].client_ptr->setAxis1TrqCnt(int16_t(torque_cmd_count1));
-      // module_infos_[i].client_ptr->setAxis2TrqCnt(int16_t(torque_cmd_count2))
+      module_infos_[i].client_ptr->setAxis1TrqCnt(int16_t(torque_cmd_count1));
+      module_infos_[i].client_ptr->setAxis2TrqCnt(int16_t(torque_cmd_count2));
     }
   }
 
-  void Elfin_Robot::test_six_axis_move()
+  void Elfin_Robot::test_six_axis_move(double cmd)
   {
     // set to zero axis
     //module_infos_[2].axis2.position_cmd = 0;
 
-    module_infos_[2].axis2.position_cmd = 0.00005;
+    module_infos_[2].axis2.position_cmd = cmd;
   }
 
 }   // end of namespace dr
@@ -305,22 +324,31 @@ int main(int argc, char** argv)
     usleep(1000000);
   }
 
-  // std::cout << "--------------------------------------\n";
-  // std::cout << "Move Robot Six Axis\n";
-  // std::cout << "--------------------------------------\n";
-  for (counter = 0 ; counter < 50; counter++)
+  std::cout << "--------------------------------------\n";
+  std::cout << "Move Robot Six Axis\n";
+  std::cout << "--------------------------------------\n";
+  for (counter = 0 ; counter < 10; counter++)
   {
+    double cmd = 0.00003;
+    
     robot.state_update();
-    robot.test_six_axis_move();
+    robot.test_six_axis_move(cmd);
     robot.write_update();
-    usleep(5000);
+    usleep(500);
   }
 
   for (counter = 0 ; counter < 2; counter++)
   {
     robot.state_update();
     usleep(1000000);
+    ros::spinOnce();
   }
+
+  // while(1)
+  // {
+  //   robot.state_update();
+  //   usleep(1000000);
+  // }
 
   std::cout << "--------------------------------------\n";
   std::cout << "Disable robot Arm\n";
@@ -331,12 +359,6 @@ int main(int argc, char** argv)
     robot.state_update();
     usleep(1000000);
   }
-
-  // while(1)
-  // {
-  //   robot.state_update();
-  //   usleep(1000000);
-  // }
 
   return 0;
 }
