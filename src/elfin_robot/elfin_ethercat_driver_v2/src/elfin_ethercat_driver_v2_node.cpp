@@ -209,29 +209,25 @@ void Elfin_Robot::state_update()
   {
     for (size_t i = 0; i < module_infos_.size(); i++)
     {
+      if(!module_infos_[i].client_ptr->inPosBasedMode())
+      {
+          module_infos_[i].axis1.position_cmd=module_infos_[i].axis1.position;
+          module_infos_[i].axis2.position_cmd=module_infos_[i].axis2.position;
+      }
+
       // update position cmd
       double position_cmd_count1=-1 * module_infos_[i].axis1.position_cmd * module_infos_[i].axis1.count_rad_factor + module_infos_[i].axis1.count_zero;
 
       double position_cmd_count2=-1 * module_infos_[i].axis2.position_cmd * module_infos_[i].axis2.count_rad_factor + module_infos_[i].axis2.count_zero;
 
       module_infos_[i].client_ptr->setAxis1PosCnt(int32_t(position_cmd_count1));
+      module_infos_[i].client_ptr->setAxis2PosCnt(int32_t(position_cmd_count2));
 
       if (i == 2)
       {
-        double position_cmd_count2=-1 * module_infos_[2].axis2.position_cmd * module_infos_[2].axis2.axis_position_factor + module_infos_[2].axis2.count_zero;
-        //module_infos_[2].client_ptr->setAxis2PosCnt(int32_t(position_cmd_count2));
-        module_infos_[2].client_ptr->setAxis2PosCnt(int32_t(module_infos_[2].axis2.count_zero - 100));
-      }
-      else
-      {
-        module_infos_[i].client_ptr->setAxis2PosCnt(int32_t(position_cmd_count2));
-      }
-      
-      if (i == 2)
-      {
-        std::cout << "\n cmd counter: " 
+        std::cout << "\n cmd counter: "
                   << position_cmd_count1 - module_infos_[2].axis1.count_zero
-                  << "  --  " 
+                  << "  --  "
                   << position_cmd_count2 - module_infos_[2].axis2.count_zero
                   << "\n";
       }
@@ -257,8 +253,7 @@ void Elfin_Robot::state_update()
     // set to zero axis
     //module_infos_[2].axis2.position_cmd = 0;
 
-    // set to decrease 0.0005 rad ~ 0.003
-    module_infos_[2].axis2.position_cmd = module_infos_[2].axis2.position - 0.0003;
+    module_infos_[2].axis2.position_cmd = 0.00005;
   }
 
 }   // end of namespace dr
