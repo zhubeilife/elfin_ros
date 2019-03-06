@@ -210,10 +210,10 @@ void Elfin_Robot::state_update()
     {
       if(!module_infos_[i].client_ptr->inPosBasedMode())
       {
-        // module_infos_[i].axis1.position_cmd=module_infos_[i].axis1.position;
-        // module_infos_[i].axis2.position_cmd=module_infos_[i].axis2.position;
+        module_infos_[i].axis1.position_cmd=module_infos_[i].axis1.position;
+        module_infos_[i].axis2.position_cmd=module_infos_[i].axis2.position;
 
-        std::cout << "Caution! Not in posbasemode!\n";
+        std::cout << "Caution! Not in PosBasedMode!\n";
       }
 
       // update position cmd
@@ -269,15 +269,12 @@ void Elfin_Robot::state_update()
 
   void Elfin_Robot::test_six_axis_move(double cmd)
   {
-    // set to zero axis
-    //module_infos_[2].axis2.position_cmd = 0;
-
     module_infos_[2].axis2.position_cmd = cmd;
   }
 
 }   // end of namespace dr
 
-#ifdef TEST_DR_ELFINROBOT
+
 
 int main(int argc, char** argv)
 {
@@ -330,7 +327,7 @@ int main(int argc, char** argv)
   for (counter = 0 ; counter < 10; counter++)
   {
     double cmd = 0.00003;
-    
+
     robot.state_update();
     robot.test_six_axis_move(cmd);
     robot.write_update();
@@ -344,12 +341,6 @@ int main(int argc, char** argv)
     ros::spinOnce();
   }
 
-  // while(1)
-  // {
-  //   robot.state_update();
-  //   usleep(1000000);
-  // }
-
   std::cout << "--------------------------------------\n";
   std::cout << "Disable robot Arm\n";
   std::cout << "--------------------------------------\n";
@@ -362,22 +353,3 @@ int main(int argc, char** argv)
 
   return 0;
 }
-
-#else
-
-int main(int argc, char** argv)
-{
-    ros::init(argc,argv,"elfin_ethercat_driver_v2", ros::init_options::AnonymousName);
-
-    ros::NodeHandle nh("elfin_ethercat_driver_v2");
-
-    std::string ethernet_name;
-    ethernet_name=nh.param<std::string>("elfin_ethernet_name", "eth0");
-
-    elfin_ethercat_driver_v2::EtherCatManager em("eno1");
-    elfin_ethercat_driver_v2::ElfinEtherCATDriver ed(&em, "elfin");
-
-    ros::spin();
-}
-
-#endif
