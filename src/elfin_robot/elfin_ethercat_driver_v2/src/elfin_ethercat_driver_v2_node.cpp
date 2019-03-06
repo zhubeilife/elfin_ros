@@ -245,10 +245,6 @@ void Elfin_Robot::state_update()
                   << "  --  "
                   << int32_t(position_cmd_count2) - module_infos_[i].axis2.count_zero
                   << "\n";
-        std::cout << "position cmd:  "
-                  << module_infos_[i].axis1.position_cmd
-                  << module_infos_[i].axis1.position_cmd
-                  << "\n";
       }
 
       // for test position cmd purpose so remove send velocity and effort command
@@ -273,8 +269,6 @@ void Elfin_Robot::state_update()
   }
 
 }   // end of namespace dr
-
-
 
 int main(int argc, char** argv)
 {
