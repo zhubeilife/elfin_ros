@@ -1,0 +1,144 @@
+--------------------------------------
+Publish Robot status
+--------------------------------------
+Axis elfin_joint6 Postion 0.412184 velocity 0 effort -0.142035
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6       
+--0.656933---8.7158e-06--2.51286--1.80357e-05--0.868366--0.412184
+
+Axis elfin_joint6 Postion 0.412184 velocity 0 effort 0.201216
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656933---9.11197e-06--2.51286--1.80357e-05--0.868366--0.412184
+
+
+--------------------------------------
+Enable Robot
+--------------------------------------
+Axis elfin_joint6 Postion 0.412203 velocity 0 effort 0.497122 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656932---3.16938e-06--2.51286--3.2749e-05--0.868369--0.412203
+
+Axis elfin_joint6 Postion 0.412197 velocity -0.000356109 effort 0 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656932---3.56555e-06--2.51286--3.03759e-05--0.868368--0.412197
+
+
+--------------------------------------
+Set Robot Arm to postion Mode
+--------------------------------------
+Axis elfin_joint6 Postion 0.412194 velocity 0.000356109 effort -0.0473449 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656932---3.56555e-06--2.51286--2.84774e-05--0.868368--0.412194
+
+Axis elfin_joint6 Postion 0.412188 velocity -0.000356109 effort 0.153871 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656932---4.3579e-06--2.51286--2.37311e-05--0.868366--0.412188
+
+
+--------------------------------------
+Move Robot Six Axis
+--------------------------------------
+Axis elfin_joint6 Postion 0.412188 velocity 0 effort 0.106526 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656932---3.96173e-06--2.51286--2.37311e-05--0.868366--0.412188
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -85
+
+Axis elfin_joint6 Postion 0.412188 velocity 0 effort 0.153871 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656932---3.16938e-06--2.51286--2.32565e-05--0.868366--0.412188
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -85
+
+Axis elfin_joint6 Postion 0.412188 velocity 0 effort -0.142035 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656931---3.56555e-06--2.51286--2.37311e-05--0.868366--0.412188
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -85
+
+Axis elfin_joint6 Postion 0.412188 velocity 0 effort -0.18938 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656927---3.56555e-06--2.51286--2.37311e-05--0.868366--0.412188
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -85
+
+Axis elfin_joint6 Postion 0.412188 velocity 0 effort -5.8826 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656868---3.56555e-06--2.51285--2.37311e-05--0.868356--0.412188
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -85
+
+Axis elfin_joint6 Postion 0.412176 velocity -0.00854663 effort -82.9483 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656744---3.16938e-06--2.51275--2.32565e-05--0.868181--0.412176
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -85
+
+Axis elfin_joint6 Postion 0.412052 velocity -0.0986423 effort -138.768 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656558---2.37704e-06--2.51257--2.32565e-05--0.867793--0.412052
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -85
+
+Axis elfin_joint6 Postion 0.412052 velocity -0.0986423 effort -138.768 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656314---2.37704e-06--2.51257--2.32565e-05--0.867793--0.412052
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -85
+
+Axis elfin_joint6 Postion 0.411714 velocity -0.288805 effort -135.205 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.656015---2.77321e-06--2.51232--2.23073e-05--0.867217--0.411714
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -85
+
+Axis elfin_joint6 Postion 0.411168 velocity -0.482884 effort -130.045 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.655665---2.37704e-06--2.51199--2.18326e-05--0.866478--0.411168
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -64
+
+Axis elfin_joint6 Postion 0.409488 velocity -0.840418 effort -126.588
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.654806---3.56555e-06--2.51114--2.1358e-05--0.864551--0.409488
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -43
+(Joint 3 4 not in posbasemode!)
+
+Axis elfin_joint6 Postion 0.408388 velocity -0.999599 effort -127.606 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.654806---3.56555e-06--2.51069--2.27819e-05--0.863366--0.408388
+cmd counter: 0  --  0  --  0  --  0  --  0  --  -22
+(Joint 3 4 not in posbasemode!)
+
+Axis elfin_joint6 Postion 0.407116 velocity -1.15736 effort -128.388 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.654299---3.56555e-06--2.51033--2.5155e-05--0.862051--0.407116
+cmd counter: 0  --  0  --  0  --  0  -- 0  --  -85
+(Joint 1 2 3 4 5 6 not in posbasemode!)
+
+Axis elfin_joint6 Postion 0.405728 velocity -1.27309 effort 113.746 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.654299---3.56555e-06--2.51033--2.5155e-05--0.860767--0.405728
+cmd counter: 0  --  0  --  0  --  0  --  0  --  0
+(Joint 1 2 3 4 5 6 not in posbasemode!)
+
+Axis elfin_joint6 Postion 0.404463 velocity -1.18798 effort 68.5436 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.65324---4.3579e-06--2.51005--3.08505e-05--0.859723--0.404463
+cmd counter: 0  --  0  --  0  --  0  --  0  --  0
+(Joint 1 2 3 4 5 6 not in posbasemode!)
+
+--------------------------------------
+Disable robot Arm
+--------------------------------------
+Axis elfin_joint6 Postion 0.390648 velocity 0 effort -0.284069 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.65405---3.56555e-06--2.51286--4.74623e-06--0.856637--0.390648
+
+Axis elfin_joint6 Postion 0.390648 velocity 0 effort 0.106526 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.654234---3.96173e-06--2.51286--3.79698e-06--0.856637--0.390648
+
+Axis elfin_joint6 Postion 0.390648 velocity 0 effort -0.0946898 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.654312---3.96173e-06--2.51286--3.79698e-06--0.856637--0.390648
+
+Axis elfin_joint6 Postion 0.390648 velocity 0.000356109 effort 0.153871 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.654429---3.56555e-06--2.51286--3.79698e-06--0.856637--0.390648
+
+Axis elfin_joint6 Postion 0.390648 velocity 0 effort 0.153871 
+--Joint 1 ---Joint 2 ---Joint 3 ---Joint 4 ---Joint 5---Joint 6  
+--0.65453---3.96173e-06--2.51286--3.32236e-06--0.856637--0.390648
+
+[elfin_ethercat_driver_v2_node-1] process has finished cleanly
+
